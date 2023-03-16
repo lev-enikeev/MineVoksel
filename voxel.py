@@ -22,7 +22,7 @@ class Voxel(Button):
             if key == 'space':
                 self.player.gravity = -0.02
 
-                self.gravity = 0.5
+                self.player.gravity = 0.5
             if key == 'escape':  # кнопка выхода из игры
                 quit()
 
