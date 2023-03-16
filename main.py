@@ -6,15 +6,17 @@ from voxel import Voxel
 
 app = Ursina()
 
+inventory = None
 
 def input(key):
     global inventory
     if key == 'e':
-        inventory = Inventory()
-        inventory.append(random.choice(
-            ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
-        inventory.append(random.choice(
-            ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
+        if not inventory:
+            inventory = Inventory()
+            inventory.append(random.choice(
+                ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
+            inventory.append(random.choice(
+                ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
 
     if key == 'r':
         destroy(inventory)
