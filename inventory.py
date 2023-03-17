@@ -8,12 +8,12 @@ class Cell(Entity):
             model=Quad(radius=.01),
             # texture = 'textures/inventory',
             #texture_scale = (5,8),
-            scale=(.09, .09),
-            origin=(-.3, .5),
-            position=(-.3, .4),
+            scale=(.075, .075),
+            #origin=(-.34, .36),
+            position=(-.31, .325),
             color=color.white33
         )
-        print(color.white)
+
 
 
 class Inventory(Entity):
