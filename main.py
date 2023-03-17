@@ -17,9 +17,12 @@ def input(key):
                 ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
             inventory.append(random.choice(
                 ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
+        player.enabled = False
+
 
     if key == 'r':
         destroy(inventory)
+        player.enabled = True
 
 
 player = FirstPersonController()
