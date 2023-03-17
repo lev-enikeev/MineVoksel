@@ -1,56 +1,72 @@
 from ursina import *
 
 
+class Cell(Entity):
+    def __init__(self, **kwargs):
+        super().__init__(
+            parent=camera.ui,
+            model=Quad(radius=.01),
+            # texture = 'textures/inventory',
+            #texture_scale = (5,8),
+            scale=(.09, .09),
+            origin=(-.3, .5),
+            position=(-.3, .4),
+            color=color.white33
+        )
+        print(color.white)
+
+
 class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
-            parent = camera.ui,
-            model = Quad(radius=.01),
-            texture = 'textures/inventory',
+            parent=camera.ui,
+            model=Quad(radius=.01),
+            texture='textures/inventory',
             #texture_scale = (5,8),
-            scale = (.8, .8),
-            origin = (-.4, .5),
-            position = (-.3,.4),
-            )
+            scale=(.8, .8),
+            origin=(-.4, .5),
+            position=(-.3, .4),
+        )
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-
+        cell = Cell()
 
     def find_free_spot(self):
         for y in range(8):
             for x in range(5):
-                grid_positions = [(int(e.x*self.texture_scale[0]), int(e.y*self.texture_scale[1])) for e in self.children]
+                grid_positions = [(int(e.x*self.texture_scale[0]),
+                                   int(e.y*self.texture_scale[1])) for e in self.children]
                 print(grid_positions)
 
-                if not (x,-y) in grid_positions:
+                if not (x, -y) in grid_positions:
                     print('found free spot:', x, y)
                     return x, y
-
 
     def append(self, item, x=0, y=0):
         print('add item:', item)
 
         if len(self.children) >= 5*8:
             print('inventory full')
-            error_message = Text('<red>Inventory is full!', origin=(0,-1.5), x=-.5, scale=2)
+            error_message = Text('<red>Inventory is full!',
+                                 origin=(0, -1.5), x=-.5, scale=2)
             destroy(error_message, delay=1)
             return
 
         x, y = self.find_free_spot()
 
         icon = Draggable(
-            parent = self,
-            model = 'quad',
-            texture = item,
-            color = color.white,
-            scale_x = 1/self.texture_scale[0],
-            scale_y = 1/self.texture_scale[1],
-            origin = (-.5,.5),
-            x = x * 1/self.texture_scale[0],
-            y = -y * 1/self.texture_scale[1],
-            z = -.5,
-            )
+            parent=self,
+            model='quad',
+            texture=item,
+            color=color.white,
+            scale_x=1/self.texture_scale[0],
+            scale_y=1/self.texture_scale[1],
+            origin=(-.5, .5),
+            x=x * 1/self.texture_scale[0],
+            y=-y * 1/self.texture_scale[1],
+            z=-.5,
+        )
         name = item.replace('_', ' ').title()
 
         if random.random() < .25:
@@ -58,8 +74,7 @@ class Inventory(Entity):
             name = '<orange>Rare ' + name
 
         icon.tooltip = Tooltip(name)
-        icon.tooltip.background.color = color.color(0,0,0,.8)
-
+        icon.tooltip.background.color = color.color(0, 0, 0, .8)
 
         def drag():
             icon.org_pos = (icon.x, icon.y)
@@ -83,7 +98,6 @@ class Inventory(Entity):
                 if c.x == icon.x and c.y == icon.y:
                     print('swap positions')
                     c.position = icon.org_pos
-
 
         icon.drag = drag
         icon.drop = drop
