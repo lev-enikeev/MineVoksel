@@ -5,13 +5,12 @@ class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
             parent = camera.ui,
-            model = Quad(radius=.015),
-            texture = 'white_cube',
-            texture_scale = (5,8),
-            scale = (.5, .8),
-            origin = (-.5, .5),
+            model = Quad(radius=.01),
+            texture = 'textures/inventory',
+            #texture_scale = (5,8),
+            scale = (.8, .8),
+            origin = (-.4, .5),
             position = (-.3,.4),
-            color = color.color(0,0,.1,.9),
             )
 
         for key, value in kwargs.items():

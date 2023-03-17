@@ -13,10 +13,7 @@ def input(key):
     if key == 'e':
         if not inventory:
             inventory = Inventory()
-            inventory.append(random.choice(
-                ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
-            inventory.append(random.choice(
-                ('bag', 'bow_arrow', 'gem', 'orb', 'sword')))
+
         player.enabled = False
 
 
