@@ -23,6 +23,7 @@ class Inventory(Entity):
             model=Quad(radius=.01),
             texture='textures/inventory',
             #texture_scale = (5,8),
+            texture_scale_items = (15,15),
             scale=(.8, .8),
             origin=(-.4, .5),
             position=(-.3, .4),
@@ -31,12 +32,45 @@ class Inventory(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
         cell = Cell()
+        startX=-0.058
+        koefX=0.1046
+        koefY=0.1104
+        for i in range(1): 
+            for j in range(4):
+                self.emptyButton(startX+i*koefX,-0.045-j*koefY)
+        for i in range(2): 
+            for j in range(2):
+                self.emptyButton(startX+4.45*koefX+i*koefX,-0.045-koefY-j*koefY)
+        for i in range(1): 
+            for j in range(1):
+                self.emptyButton(startX+7.55*koefX+i*koefX,-0.053-1.47*koefY-j*koefY)
+        for i in range(9):
+            for j in range(3):
+                self.emptyButton(startX+i*koefX,-0.508-j*koefY)
+        for i in range(9):
+            for j in range(1):
+                self.emptyButton(startX+i*koefX,-0.865-j*koefY)
+
+    def emptyButton(self,x,y):
+        b = Button(                                                         
+            parent = self,                             
+            scale = (.09,.095),                                                
+            x = -.5,                                                        
+            color = color.gray.tint(0.10),                                  
+            #text = '',                                                     
+            tooltip = Tooltip('Empty'),                    
+            #color = color.white,                                        
+            origin = (-.5,.5),
+            position = (x,y),
+            z = -.1                                             
+            )
+        return b
 
     def find_free_spot(self):
         for y in range(8):
             for x in range(5):
-                grid_positions = [(int(e.x*self.texture_scale[0]),
-                                   int(e.y*self.texture_scale[1])) for e in self.children]
+                grid_positions = [(int(e.x*self.texture_scale_items[0]),
+                                   int(e.y*self.texture_scale_items[1])) for e in self.children]
                 print(grid_positions)
 
                 if not (x, -y) in grid_positions:
@@ -58,15 +92,16 @@ class Inventory(Entity):
         icon = Draggable(
             parent=self,
             model='quad',
-            texture=item,
+            #texture=item,
             color=color.white,
-            scale_x=1/self.texture_scale[0],
-            scale_y=1/self.texture_scale[1],
+            scale_x=1/self.texture_scale_items[0],
+            scale_y=1/self.texture_scale_items[1],
             origin=(-.5, .5),
-            x=x * 1/self.texture_scale[0],
-            y=-y * 1/self.texture_scale[1],
+            x=x * 1/self.texture_scale_items[0],
+            y=-y * 1/self.texture_scale_items[1],
             z=-.5,
         )
+        
         name = item.replace('_', ' ').title()
 
         if random.random() < .25:
@@ -101,3 +136,4 @@ class Inventory(Entity):
 
         icon.drag = drag
         icon.drop = drop
+        
