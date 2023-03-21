@@ -16,6 +16,7 @@ class Inventory(Entity):
 
         for key, value in kwargs.items():
             setattr(self, key, value)
+
         startX=-0.058
         koefX=0.1046
         koefY=0.1104
@@ -40,7 +41,8 @@ class Inventory(Entity):
             parent = self,                             
             scale = (.09,.095),                                                
             x = -.5,                                                        
-            color = color.gray.tint(0.10),                                  
+            color = color.gray.tint(0.10),               
+            texture='textures/icons/3D Brick',                   
             #text = '',                                                     
             tooltip = Tooltip('Empty'),                    
             #color = color.white,                                        
