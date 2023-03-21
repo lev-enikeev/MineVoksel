@@ -12,6 +12,9 @@ class InventoryCell(Button):
                          position=(x, y),
                          z=-.1,
                          **kwargs)
+    
+    def on_click(self):
+        self.texture = 'textures/icons/brick.png'
 
 
 class Inventory(Entity):
@@ -38,26 +41,20 @@ class Inventory(Entity):
         def on_click():
             self.helmet.texture = 'textures/icons/brick'
         self.helmet.on_click = on_click
-        self.armor = InventoryCell(startX, -0.045-koefY, parent=self)
-        self.pants = InventoryCell(startX, -0.045-2*koefY, parent=self)
-        self.boots = InventoryCell(startX, -0.045-3*koefY, parent=self)
-        self.craft = []
+        InventoryCell(startX, -0.045-koefY, parent=self)
+        InventoryCell(startX, -0.045-2*koefY, parent=self)
+        InventoryCell(startX, -0.045-3*koefY, parent=self)
         for i in range(2):
             for j in range(2):
-                self.craft.append(
-                    InventoryCell(startX+4.45*koefX+i*koefX, -0.045-koefY-j*koefY, parent=self))
-        self.craft_end = InventoryCell(
-            startX+7.55*koefX, -0.053-1.47*koefY, parent=self)
-        self.inventory_cells = []
+                InventoryCell(startX+4.45*koefX+i*koefX, -0.045-koefY-j*koefY, parent=self)
+        InventoryCell(startX+7.55*koefX, -0.053-1.47*koefY, parent=self)
         for i in range(9):
             for j in range(3):
-                self.inventory_cells.append(
-                    InventoryCell(startX+i*koefX, -0.508-j*koefY, parent=self))
+                InventoryCell(startX+i*koefX, -0.508-j*koefY, parent=self)
         self.quick_cells = []
         for i in range(9):
             for j in range(1):
-                self.quick_cells.append(
-                    InventoryCell(startX+i*koefX, -0.865-j*koefY, parent=self))
+                InventoryCell(startX+i*koefX, -0.865-j*koefY, parent=self)
 
     def find_free_spot(self):
         for y in range(8):
