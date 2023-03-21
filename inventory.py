@@ -36,11 +36,7 @@ class Inventory(Entity):
         startX = -0.058
         koefX = 0.1046
         koefY = 0.1104
-        self.helmet = InventoryCell(startX, -0.045, parent=self)
-
-        def on_click():
-            self.helmet.texture = 'textures/icons/brick'
-        self.helmet.on_click = on_click
+        InventoryCell(startX, -0.045, parent=self)
         InventoryCell(startX, -0.045-koefY, parent=self)
         InventoryCell(startX, -0.045-2*koefY, parent=self)
         InventoryCell(startX, -0.045-3*koefY, parent=self)
