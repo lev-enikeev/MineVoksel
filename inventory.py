@@ -1,21 +1,6 @@
 from ursina import *
 
 
-class Cell(Entity):
-    def __init__(self, **kwargs):
-        super().__init__(
-            parent=camera.ui,
-            model=Quad(radius=.01),
-            # texture = 'textures/inventory',
-            #texture_scale = (5,8),
-            scale=(.075, .075),
-            #origin=(-.34, .36),
-            position=(-.31, .325),
-            color=color.white33
-        )
-
-
-
 class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
@@ -31,7 +16,6 @@ class Inventory(Entity):
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-        cell = Cell()
         startX=-0.058
         koefX=0.1046
         koefY=0.1104
