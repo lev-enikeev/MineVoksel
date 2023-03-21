@@ -1,6 +1,19 @@
 from ursina import *
 
 
+class InventoryCell(Button):
+    def __init__(self, x, y, cell_type=None, **kwargs):
+        super().__init__(self,
+                         scale=(.09, .095),
+                         x=-.5,
+                         color=color.gray.tint(0.10),
+                         tooltip=Tooltip('Empty'),
+                         origin=(-.5, .5),
+                         position=(x, y),
+                         z=-.1,
+                         **kwargs)
+
+
 class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
@@ -8,7 +21,7 @@ class Inventory(Entity):
             model=Quad(radius=.01),
             texture='textures/inventory',
             #texture_scale = (5,8),
-            texture_scale_items = (15,15),
+            texture_scale_items=(15, 15),
             scale=(.8, .8),
             origin=(-.4, .5),
             position=(-.3, .4),
@@ -17,40 +30,34 @@ class Inventory(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-        startX=-0.058
-        koefX=0.1046
-        koefY=0.1104
-        for i in range(1): 
-            for j in range(4):
-                self.emptyButton(startX+i*koefX,-0.045-j*koefY)
-        for i in range(2): 
+        startX = -0.058
+        koefX = 0.1046
+        koefY = 0.1104
+        self.helmet = InventoryCell(startX, -0.045, parent=self)
+
+        def on_click():
+            self.helmet.texture = 'textures/icons/brick'
+        self.helmet.on_click = on_click
+        self.armor = InventoryCell(startX, -0.045-koefY, parent=self)
+        self.pants = InventoryCell(startX, -0.045-2*koefY, parent=self)
+        self.boots = InventoryCell(startX, -0.045-3*koefY, parent=self)
+        self.craft = []
+        for i in range(2):
             for j in range(2):
-                self.emptyButton(startX+4.45*koefX+i*koefX,-0.045-koefY-j*koefY)
-        for i in range(1): 
-            for j in range(1):
-                self.emptyButton(startX+7.55*koefX+i*koefX,-0.053-1.47*koefY-j*koefY)
+                self.craft.append(
+                    InventoryCell(startX+4.45*koefX+i*koefX, -0.045-koefY-j*koefY, parent=self))
+        self.craft_end = InventoryCell(
+            startX+7.55*koefX, -0.053-1.47*koefY, parent=self)
+        self.inventory_cells = []
         for i in range(9):
             for j in range(3):
-                self.emptyButton(startX+i*koefX,-0.508-j*koefY)
+                self.inventory_cells.append(
+                    InventoryCell(startX+i*koefX, -0.508-j*koefY, parent=self))
+        self.quick_cells = []
         for i in range(9):
             for j in range(1):
-                self.emptyButton(startX+i*koefX,-0.865-j*koefY)
-
-    def emptyButton(self,x,y):
-        b = Button(                                                         
-            parent = self,                             
-            scale = (.09,.095),                                                
-            x = -.5,                                                        
-            color = color.gray.tint(0.10),               
-            texture='textures/icons/3D Brick',                   
-            #text = '',                                                     
-            tooltip = Tooltip('Empty'),                    
-            #color = color.white,                                        
-            origin = (-.5,.5),
-            position = (x,y),
-            z = -.1                                             
-            )
-        return b
+                self.quick_cells.append(
+                    InventoryCell(startX+i*koefX, -0.865-j*koefY, parent=self))
 
     def find_free_spot(self):
         for y in range(8):
@@ -78,7 +85,7 @@ class Inventory(Entity):
         icon = Draggable(
             parent=self,
             model='quad',
-            #texture=item,
+            # texture=item,
             color=color.white,
             scale_x=1/self.texture_scale_items[0],
             scale_y=1/self.texture_scale_items[1],
@@ -87,7 +94,7 @@ class Inventory(Entity):
             y=-y * 1/self.texture_scale_items[1],
             z=-.5,
         )
-        
+
         name = item.replace('_', ' ').title()
 
         if random.random() < .25:
@@ -122,4 +129,3 @@ class Inventory(Entity):
 
         icon.drag = drag
         icon.drop = drop
-        
