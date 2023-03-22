@@ -12,10 +12,23 @@ class InventoryCell(Button):
                          position=(x, y),
                          z=-.1,
                          **kwargs)
-    
+        self.texture_scale_items = (15, 15)
+
     def on_click(self):
-        self.tooltip.text="brick"
-        self.texture = 'textures/icons/brick.png'
+        icon = Draggable(
+            # parent=self,
+            model='quad',
+            texture=self.texture,
+            color=color.white,
+            scale_x=1/self.texture_scale_items[0],
+            scale_y=1/self.texture_scale_items[1],
+            origin=(-.5, .5),
+            x=self.x * 1/self.texture_scale_items[0],
+            y=-self.y * 1/self.texture_scale_items[1],
+            z=-.5,
+        )
+        # self.tooltip.text="brick"
+        # self.texture = 'textures/icons/brick.png'
 
 
 class Inventory(Entity):
@@ -43,10 +56,17 @@ class Inventory(Entity):
         InventoryCell(startX, -0.045-3*koefY, parent=self)
         for i in range(2):
             for j in range(2):
-                InventoryCell(startX+4.45*koefX+i*koefX, -0.045-koefY-j*koefY, parent=self)
+                InventoryCell(startX+4.45*koefX+i*koefX, -
+                              0.045-koefY-j*koefY, parent=self)
         InventoryCell(startX+7.55*koefX, -0.053-1.47*koefY, parent=self)
         for i in range(9):
             for j in range(3):
+                if i == 0 and j == 0:
+                    cell = InventoryCell(
+                        startX+i*koefX, -0.508-j*koefY, parent=self)
+                    cell.texture = 'textures/icons/brick.png'
+                    cell.tooltip.text = 'brick'
+                    continue
                 InventoryCell(startX+i*koefX, -0.508-j*koefY, parent=self)
         self.quick_cells = []
         for i in range(9):
