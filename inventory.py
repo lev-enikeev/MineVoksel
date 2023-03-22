@@ -15,17 +15,13 @@ class InventoryCell(Button):
 
     def on_click(self):
         icon = Draggable(
-            
-            # parent=self,
-            
+            parent=self.parent,
             model='quad',
             texture=self.texture,
             color=color.white,
-            scale_x=1/self.texture_scale_items[0],
-            scale_y=1/self.texture_scale_items[1],
+            scale=self.scale,
             origin=(-.5, .5),
-            x=self.x * 1/self.texture_scale_items[0],
-            y=-self.y * 1/self.texture_scale_items[1],
+            position = (self.position[0]+0.01, self.position[1]+0.01),
             z=-.5,
         )
         self.texture = None
