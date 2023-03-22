@@ -27,6 +27,12 @@ class InventoryCell(Button):
         self.texture = None
         # self.tooltip.text="brick"
         # self.texture = 'textures/icons/brick.png'
+
+    def update(self):
+        pass
+    
+
+
 class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
