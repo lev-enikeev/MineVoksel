@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class InventoryCell(Button):
     def __init__(self, x, y, cell_type=None, **kwargs):
         super().__init__(self,
@@ -16,7 +15,9 @@ class InventoryCell(Button):
 
     def on_click(self):
         icon = Draggable(
+            
             # parent=self,
+            
             model='quad',
             texture=self.texture,
             color=color.white,
@@ -27,10 +28,9 @@ class InventoryCell(Button):
             y=-self.y * 1/self.texture_scale_items[1],
             z=-.5,
         )
+        self.texture = None
         # self.tooltip.text="brick"
         # self.texture = 'textures/icons/brick.png'
-
-
 class Inventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
