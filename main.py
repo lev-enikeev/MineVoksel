@@ -13,7 +13,6 @@ def input(key):
     if key == 'e':
         if not inventory:
             inventory = Inventory()
-            inventory.append("textures/icons/3D/3D Gold Block")
 
         player.enabled = False
 

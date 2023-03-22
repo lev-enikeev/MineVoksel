@@ -14,6 +14,7 @@ class InventoryCell(Button):
                          **kwargs)
     
     def on_click(self):
+        self.tooltip.text="brick"
         self.texture = 'textures/icons/brick.png'
 
 
