@@ -14,7 +14,7 @@ class InventoryCell(Button):
         self.texture_scale_items = (15, 15)
 
     def on_click(self):
-        icon = Draggable(
+        self.icon = Draggable(
             parent=self.parent,
             model='quad',
             texture=self.texture,
@@ -29,7 +29,11 @@ class InventoryCell(Button):
         # self.texture = 'textures/icons/brick.png'
 
     def update(self):
-        pass
+        if hasattr(self, "icon"):
+            self.icon.x = mouse.x*14 + 4
+            self.icon.y = mouse.y*14 + 0.4
+            self.icon.texture = self.texture
+            
     
 
 
