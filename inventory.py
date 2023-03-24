@@ -14,9 +14,10 @@ class InventoryCell(Button):
         self.texture_scale_items = (15, 15)
 
     def on_click(self):
-        self.icon = Draggable(
+        if hasattr(self, 'icon'):
+            return
+        self.icon = Entity(
             parent=self.parent,
-            model='quad',
             texture=self.texture,
             color=color.white,
             scale=self.scale,
