@@ -1,14 +1,6 @@
 from ursina import *
 
 
-class InventoryState:
-    def __init__(self, on):
-        self.on = on
-
-
-invs = InventoryState(on=False)
-
-
 class InventoryCell(Button):
     def __init__(self, x, y, cell_type=None, **kwargs):
         super().__init__(self,
@@ -21,16 +13,17 @@ class InventoryCell(Button):
                          z=-.1,
                          **kwargs)
         self.texture_scale_items = (15, 15)
+        self.icon_drag = None
 
     def on_click(self):
-        if hasattr(self, 'icon'):
+        if self.icon_drag:
             return
-        if invs.on:
+        if self.parent.on:
             self.texture = 'textures/icons/brick.png'
             self.tooltip.text = 'brick'
-            state = 'OFF'
+            self.parent.on = False
             return
-        self.icon = Entity(
+        self.parent.icon_drag = Entity(
             parent=self.parent,
             texture=self.texture,
             color=color.white,
@@ -40,17 +33,7 @@ class InventoryCell(Button):
             z=-.5,
         )
         self.texture = None
-        invs.on = True
-        # self.tooltip.text="brick"
-        # self.texture = 'textures/icons/brick.png'
-
-    def update(self):
-        print(invs.on)
-        if hasattr(self, "icon"):
-            print(self.texture)
-            self.icon.x = mouse.x*14 + 4
-            self.icon.y = mouse.y*14 + 0.4
-            self.icon.texture = self.texture
+        self.parent.on = True
 
 
 class Inventory(Entity):
@@ -65,6 +48,8 @@ class Inventory(Entity):
             origin=(-.4, .5),
             position=(-.3, .4),
         )
+        self.on = False
+        self.icon_drag = None
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -94,73 +79,8 @@ class Inventory(Entity):
             for j in range(1):
                 InventoryCell(startX+i*koefX, -0.865-j*koefY, parent=self)
 
-    def find_free_spot(self):
-        for y in range(8):
-            for x in range(5):
-                grid_positions = [(int(e.x*self.texture_scale_items[0]),
-                                   int(e.y*self.texture_scale_items[1])) for e in self.children]
-                print(grid_positions)
-
-                if not (x, -y) in grid_positions:
-                    print('found free spot:', x, y)
-                    return x, y
-
-    def append(self, item, x=0, y=0):
-        print('add item:', item)
-
-        if len(self.children) >= 5*8:
-            print('inventory full')
-            error_message = Text('<red>Inventory is full!',
-                                 origin=(0, -1.5), x=-.5, scale=2)
-            destroy(error_message, delay=1)
-            return
-
-        x, y = self.find_free_spot()
-
-        icon = Draggable(
-            parent=self,
-            model='quad',
-            # texture=item,
-            color=color.white,
-            scale_x=1/self.texture_scale_items[0],
-            scale_y=1/self.texture_scale_items[1],
-            origin=(-.5, .5),
-            x=x * 1/self.texture_scale_items[0],
-            y=-y * 1/self.texture_scale_items[1],
-            z=-.5,
-        )
-
-        name = item.replace('_', ' ').title()
-
-        if random.random() < .25:
-            icon.color = color.gold
-            name = '<orange>Rare ' + name
-
-        icon.tooltip = Tooltip(name)
-        icon.tooltip.background.color = color.color(0, 0, 0, .8)
-
-        def drag():
-            icon.org_pos = (icon.x, icon.y)
-            icon.z -= .01   # ensure the dragged item overlaps the rest
-
-        def drop():
-            icon.x = int((icon.x + (icon.scale_x/2)) * 5) / 5
-            icon.y = int((icon.y - (icon.scale_y/2)) * 8) / 8
-            icon.z += .01
-
-            # if outside, return to original position
-            if icon.x < 0 or icon.x >= 1 or icon.y > 0 or icon.y <= -1:
-                icon.position = (icon.org_pos)
-                return
-
-            # if the spot is taken, swap positions
-            for c in self.children:
-                if c == icon:
-                    continue
-
-                if c.x == icon.x and c.y == icon.y:
-                    print('swap positions')
-                    c.position = icon.org_pos
-
-        icon.drag = drag
-        icon.drop = drop
+    def update(self):
+        if self.icon_drag:
+            self.icon_drag.x = mouse.x*14 + 4
+            self.icon_drag.y = mouse.y*14 + 0.4
+            self.icon_drag.texture = 'textures/icons/brick.png'
