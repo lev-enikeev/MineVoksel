@@ -22,20 +22,26 @@ class InventoryCell(Button):
             self.texture = 'textures/icons/brick.png'
             self.tooltip.text = 'brick'
             self.parent.on = False
+            
+            self.icon_drag = self.parent.icon_drag
+            destroy(self.parent.icon_drag)
             return
-        self.parent.icon_drag = Entity(
-            parent=self.parent,
-            model='quad',
-            texture='textures/icons/brick',
-            color=color.white,
-            scale=self.scale,
-            origin=(-.5, .5),
-            position=(self.position[0]+0.01, self.position[1]+0.01),
-            z=-.5,
-        )
-        print(self.parent.icon_drag.texture)
-        self.texture = None
-        self.parent.on = True
+        if self.texture:
+
+            self.parent.icon_drag = Entity(
+                parent=self.parent,
+                model='quad',
+                texture='textures/icons/brick',
+                color=color.white,
+                scale=self.scale,
+                origin=(-.5, .5),
+                position=(self.position[0]+0.01, self.position[1]+0.01),
+                z=-.5,
+            )
+            print(self.parent.icon_drag.texture)
+            self.texture = None
+            self.tooltip.text = 'Empty'
+            self.parent.on = True
 
 
 class Inventory(Entity):
