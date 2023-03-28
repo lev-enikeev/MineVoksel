@@ -3,7 +3,6 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from inventory import Inventory
 from voxel import Voxel
 
-
 app = Ursina()
 
 inventory = None
