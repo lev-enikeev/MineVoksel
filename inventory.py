@@ -1,5 +1,14 @@
 from ursina import *
 
+
+class InventoryState:
+    def __init__(self, on):
+        self.on = on
+
+
+invs = InventoryState(on=False)
+
+
 class InventoryCell(Button):
     def __init__(self, x, y, cell_type=None, **kwargs):
         super().__init__(self,
@@ -16,26 +25,32 @@ class InventoryCell(Button):
     def on_click(self):
         if hasattr(self, 'icon'):
             return
+        if invs.on:
+            self.texture = 'textures/icons/brick.png'
+            self.tooltip.text = 'brick'
+            state = 'OFF'
+            return
         self.icon = Entity(
             parent=self.parent,
             texture=self.texture,
             color=color.white,
             scale=self.scale,
             origin=(-.5, .5),
-            position = (self.position[0]+0.01, self.position[1]+0.01),
+            position=(self.position[0]+0.01, self.position[1]+0.01),
             z=-.5,
         )
         self.texture = None
+        invs.on = True
         # self.tooltip.text="brick"
         # self.texture = 'textures/icons/brick.png'
 
     def update(self):
+        print(invs.on)
         if hasattr(self, "icon"):
+            print(self.texture)
             self.icon.x = mouse.x*14 + 4
             self.icon.y = mouse.y*14 + 0.4
             self.icon.texture = self.texture
-            
-    
 
 
 class Inventory(Entity):
@@ -50,7 +65,6 @@ class Inventory(Entity):
             origin=(-.4, .5),
             position=(-.3, .4),
         )
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
