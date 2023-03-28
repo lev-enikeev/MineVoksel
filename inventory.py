@@ -25,13 +25,14 @@ class InventoryCell(Button):
             return
         self.parent.icon_drag = Entity(
             parent=self.parent,
-            texture=self.texture,
+            texture='textures/icons/brick',
             color=color.white,
             scale=self.scale,
             origin=(-.5, .5),
             position=(self.position[0]+0.01, self.position[1]+0.01),
             z=-.5,
         )
+        print(self.parent.icon_drag.texture)
         self.texture = None
         self.parent.on = True
 
@@ -81,6 +82,7 @@ class Inventory(Entity):
 
     def update(self):
         if self.icon_drag:
+            # self.icon_drag.texture = 'textures/icons/brick.png'
+            # print(self.icon_drag.texture)
             self.icon_drag.x = mouse.x*14 + 4
             self.icon_drag.y = mouse.y*14 + 0.4
-            self.icon_drag.texture = 'textures/icons/brick.png'
