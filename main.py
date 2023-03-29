@@ -1,12 +1,14 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 from inventory import Inventory
+from quick_menu import QuickInventory
 from voxel import Voxel
 
 app = Ursina()
 
 inventory = None
-
+quickInventory = None
+quickInventory = QuickInventory()
 def input(key):
     global inventory
     if key == 'e':

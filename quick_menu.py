@@ -44,17 +44,17 @@ class InventoryCell(Button):
             self.parent.on = True
 
 
-class Inventory(Entity):
+class QuickInventory(Entity):
     def __init__(self, **kwargs):
         super().__init__(
             parent=camera.ui,
             model=Quad(radius=.01),
-            texture='textures/inventory',
+            texture='textures/inventorylow.png',
             #texture_scale = (5,8),
             texture_scale_items=(15, 15),
-            scale=(.8, .8),
+            scale=(.8, .13),
             origin=(-.4, .5),
-            position=(-.3, .48),
+            position=(-.3, -.37),
         )
         self.on = False
         self.icon_drag = None
@@ -64,32 +64,3 @@ class Inventory(Entity):
         startX = -0.058
         koefX = 0.1046
         koefY = 0.1104
-        InventoryCell(startX, -0.045, parent=self)
-        InventoryCell(startX, -0.045-koefY, parent=self)
-        InventoryCell(startX, -0.045-2*koefY, parent=self)
-        InventoryCell(startX, -0.045-3*koefY, parent=self)
-        for i in range(2):
-            for j in range(2):
-                InventoryCell(startX+4.45*koefX+i*koefX, -
-                              0.045-koefY-j*koefY, parent=self)
-        InventoryCell(startX+7.55*koefX, -0.053-1.47*koefY, parent=self)
-        for i in range(9):
-            for j in range(3):
-                if i == 0 and j == 0:
-                    cell = InventoryCell(
-                        startX+i*koefX, -0.508-j*koefY, parent=self)
-                    cell.texture = 'textures/icons/brick.png'
-                    cell.tooltip.text = 'brick'
-                    continue
-                InventoryCell(startX+i*koefX, -0.508-j*koefY, parent=self)
-        self.quick_cells = []
-        for i in range(9):
-            for j in range(1):
-                InventoryCell(startX+i*koefX, -0.865-j*koefY, parent=self)
-
-    def update(self):
-        if self.icon_drag:
-            # self.icon_drag.texture = 'textures/icons/brick.png'
-            # print(self.icon_drag.texture)
-            self.icon_drag.x = mouse.x + 0.23
-            self.icon_drag.y = mouse.y - 0.49
