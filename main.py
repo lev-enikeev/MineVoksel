@@ -9,6 +9,8 @@ app = Ursina()
 inventory = None
 quickInventory = None
 quickInventory = QuickInventory()
+
+
 def input(key):
     global inventory
     if key == 'e':
@@ -17,8 +19,8 @@ def input(key):
 
         player.enabled = False
     if key == 'left mouse down':
-        hand.model ="model\hand_005"
-
+        hand.rotation_x = 160
+        hand.frame = 5
 
     if key == 'r':
         destroy(inventory)
@@ -26,10 +28,11 @@ def input(key):
 
 
 def update():
-    print(hand.model)
-    if "hand_005.obj" in hand.model:
-        print("tut")
-        hand.model ="model\hand_000"
+    if hand.frame > 0:
+        hand.frame -= 1
+    if hand.frame == 0 and hand.rotation_x != 150:
+        hand.rotation_x = 150
+
 
 player = FirstPersonController()
 player.speed = 5
@@ -41,9 +44,9 @@ for x_dynamic in range(60):
     for z_dynamic in range(60):
         Voxel(player, position=(x_dynamic, 0, z_dynamic), texture=grass_texture)
 
-hand = Entity(parent=camera.ui, model='model/hand_000.obj',
+hand = Entity(parent=camera.ui, model='model/hand_000',
               rotation=Vec3(150, -10, 0), position=Vec2(0.6, -0.6))
-
+hand.frame = 0
 
 sky = Entity(
     model='sphere', texture=load_texture('textures/skybox.jpg'),
