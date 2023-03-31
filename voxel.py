@@ -9,15 +9,29 @@ class Voxel(Button):
             origin_y=0.0015, color=color.color(0, 0, random.uniform(0.9, 1))
         )
         self.player = player
+        self.bit_block= 0
 
     def input(self, key):
+        
         shift_clicks = 0
         if self.hovered:
-            if key == 'right mouse down':
-                pass
+            # if key == 'right mouse down':
+            #     pass
 
             if key == 'left mouse down':
-                destroy(self)
+                
+                print(self.color)
+                
+                self.bit_block += 1
+                # self.color[1] = 1-self.bit_block/3
+                print(self.bit_block)
+                self.texture = "textures/Grass_Block_TEX1.png"
+                if self.bit_block >= 2:
+                    self.texture = "textures/Grass_Block_TEX2.png"
+                if self.bit_block >= 3:
+                    
+                    destroy(self)
+                    self.bit_block == 0
 
             if key == 'space':
                 self.player.gravity = -0.02
@@ -28,9 +42,9 @@ class Voxel(Button):
 
             if key == 'shift':  # кнопка быстрого бега
 
-                self.player.speed +=  3  # увеличиваем скорость при нажатии
+                self.player.speed =  8  # увеличиваем скорость при нажатии
                 shift_clicks += 1
 
             if key == 'control':
-                self.player.speed -= 3
+                self.player.speed = 5
                 shift_clicks -= 1
