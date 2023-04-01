@@ -20,16 +20,15 @@ class Voxel(Button):
 
             if key == 'left mouse down':
                 
-                print(self.color)
                 
                 self.bit_block += 1
                 # self.color[1] = 1-self.bit_block/3
                 print(self.bit_block)
-                self.texture = "textures/Grass_Block_TEX1.png"
+                if self.bit_block == 1:
+                    self.texture = "textures/Grass_Block_TEX1.png"
                 if self.bit_block >= 2:
                     self.texture = "textures/Grass_Block_TEX2.png"
                 if self.bit_block >= 3:
-                    
                     destroy(self)
                     self.bit_block == 0
 
