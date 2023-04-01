@@ -1,6 +1,6 @@
 from ursina import *
 
-
+from partickes import ParticleSystem
 class Voxel(Button):
     def __init__(self, player, position=(0, 0, 0), texture=None):
         super().__init__(
@@ -19,7 +19,8 @@ class Voxel(Button):
             #     pass
 
             if key == 'left mouse down':
-                
+                p = ParticleSystem(position = self.position, texture = "textures/particle.png")
+                p.fade_out(duration=.2, delay=1-.2, curve=curve.linear)
                 
                 self.bit_block += 1
                 # self.color[1] = 1-self.bit_block/3
@@ -33,11 +34,11 @@ class Voxel(Button):
                 if self.bit_block >= 4:
                     destroy(self)
                     self.bit_block == 0
-
             if key == 'space':
                 self.player.gravity = -0.02
 
                 self.player.gravity = 0.5
+            
             if key == 'escape':  # кнопка выхода из игры
                 quit()
 
