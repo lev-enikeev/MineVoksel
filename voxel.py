@@ -29,6 +29,8 @@ class Voxel(Button):
                 if self.bit_block >= 2:
                     self.texture = "textures/Grass_Block_TEX2.png"
                 if self.bit_block >= 3:
+                    self.texture = "textures/Grass_Block_TEX3.png"
+                if self.bit_block >= 4:
                     destroy(self)
                     self.bit_block == 0
 
