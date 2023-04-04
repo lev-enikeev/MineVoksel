@@ -14,7 +14,7 @@ for i in range(60*1):
 
 class ParticleSystem(Entity):
     def __init__(self, **kwargs):
-        super().__init__(model=Mesh(vertices=points, mode='point', static=False, render_points_in_3d=True, thickness=.1), t=0, duration=.5, **kwargs)
+        super().__init__(model=Mesh(vertices=points, mode='point', static=False, render_points_in_3d=True, thickness=.052), t=0, duration=.5, **kwargs)
 
         for key, value in kwargs.items():
             setattr(self, key, value)

@@ -10,6 +10,7 @@ class Voxel(Button):
         )
         self.player = player
         self.bit_block= 0
+        
 
     def input(self, key):
         
@@ -24,7 +25,6 @@ class Voxel(Button):
                 
                 self.bit_block += 1
                 # self.color[1] = 1-self.bit_block/3
-                print(self.bit_block)
                 if self.bit_block == 1:
                     self.texture = "textures/Grass_Block_TEX1.png"
                 if self.bit_block >= 2:
@@ -38,7 +38,9 @@ class Voxel(Button):
                 self.player.gravity = -0.02
 
                 self.player.gravity = 0.5
-            
+
+            if key == '1':
+                print("1")
             if key == 'escape':  # кнопка выхода из игры
                 quit()
 
