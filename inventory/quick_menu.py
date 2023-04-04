@@ -20,7 +20,7 @@ class QuickInventory(Entity):
         super().__init__(
             parent=camera.ui,
             model=Quad(radius=.01),
-            texture='textures/inventorylow.png',
+            texture='textures/lowinventory.png',
             #texture_scale = (5,8),
             texture_scale_items=(15, 15),
             scale=(.8, .13),

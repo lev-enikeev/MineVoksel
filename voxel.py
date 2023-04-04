@@ -1,6 +1,7 @@
 from ursina import *
+from partickles import ParticleSystem
 
-from partickes import ParticleSystem
+
 class Voxel(Button):
     def __init__(self, player, position=(0, 0, 0), texture=None):
         super().__init__(

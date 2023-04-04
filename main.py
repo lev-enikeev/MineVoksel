@@ -1,9 +1,8 @@
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-from inventory import Inventory
-from quick_menu import QuickInventory
+from inventory.inventory import Inventory
+from inventory.quick_menu import QuickInventory
 from voxel import Voxel
-import time
 app = Ursina()
 
 inventory = None
